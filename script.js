@@ -81,6 +81,14 @@ function startLogging() {
     data = [];
     document.getElementById("start").disabled = true;
     document.getElementById("stop").disabled = false;
+    document.getElementById("exportJSON").disabled = true;
+
+    // Reset stats
+    stats = {
+        x: { min: Infinity, max: -Infinity, sum: 0, count: 0 },
+        y: { min: Infinity, max: -Infinity, sum: 0, count: 0 },
+        z: { min: Infinity, max: -Infinity, sum: 0, count: 0 }
+    };
 
     // Reset chart data
     gyroChart.data.labels = [];
@@ -100,7 +108,7 @@ function captureMotion(event) {
     let gyroY = event.rotationRate?.beta || 0;
     let gyroZ = event.rotationRate?.gamma || 0;
 
-    data.push({timestamp, x: gyroX, y: gyroY, z: gyroZ});
+    data.push({ timestamp, x: gyroX, y: gyroY, z: gyroZ });
 
     // Update statistics
     updateStats('x', gyroX);
@@ -121,7 +129,7 @@ function captureMotion(event) {
         gyroChart.data.datasets.forEach(dataset => dataset.data.shift());
     }
 
-    gyroChart.update();
+    gyroChart.update('none');
 }
 
 function stopLogging() {

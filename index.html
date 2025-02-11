@@ -44,25 +44,37 @@
         }
         #chartContainer { 
             width: 100%; 
-            max-width: 800px; 
+            max-width: 1200px; 
             margin: 20px auto;
             background-color: var(--card-bg);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 50vh;
+            min-height: 300px;
         }
         #statsContainer {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 20px auto;
+            padding: 0 20px;
         }
         .stat-card {
             background-color: var(--card-bg);
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+        }
+        .stat-card p {
+            margin: 5px 0;
         }
         .controls {
             margin: 20px 0;
@@ -90,6 +102,9 @@
         <button id="stop" disabled>Stop & Download</button>
         <button id="exportJSON" disabled>Export JSON</button>
     </div>
+    <div id="chartContainer">
+        <canvas id="gyroChart"></canvas>
+    </div>
     <div id="statsContainer">
         <div class="stat-card">
             <h3>X-Axis</h3>
@@ -109,9 +124,6 @@
             <p>Max: <span id="zMax">0</span>°/s</p>
             <p>Avg: <span id="zAvg">0</span>°/s</p>
         </div>
-    </div>
-    <div id="chartContainer">
-        <canvas id="gyroChart"></canvas>
     </div>
     <script src="script.js"></script>
 </body>
