@@ -5,16 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gyro Data Logger</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        button { font-size: 18px; padding: 10px; margin: 10px; }
-        #chartContainer { width: 100%; max-width: 800px; margin: 20px auto; }
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --button-bg: #4CAF50;
+            --button-text: #ffffff;
+            --card-bg: #f5f5f5;
+        }
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --button-bg: #45a049;
+            --button-text: #ffffff;
+            --card-bg: #2d2d2d;
+        }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        button { 
+            font-size: 18px; 
+            padding: 10px 20px; 
+            margin: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #chartContainer { 
+            width: 100%; 
+            max-width: 800px; 
+            margin: 20px auto;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #statsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        #themeToggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <button id="themeToggle" title="Toggle dark mode">🌓</button>
     <h1>Gyro Data Logger</h1>
-    <button id="start">Start Logging</button>
-    <button id="stop" disabled>Stop & Download</button>
+    <div class="controls">
+        <button id="start">Start Logging</button>
+        <button id="stop" disabled>Stop & Download</button>
+        <button id="exportJSON" disabled>Export JSON</button>
+    </div>
+    <div id="statsContainer">
+        <div class="stat-card">
+            <h3>X-Axis</h3>
+            <p>Min: <span id="xMin">0</span>°/s</p>
+            <p>Max: <span id="xMax">0</span>°/s</p>
+            <p>Avg: <span id="xAvg">0</span>°/s</p>
+        </div>
+        <div class="stat-card">
+            <h3>Y-Axis</h3>
+            <p>Min: <span id="yMin">0</span>°/s</p>
+            <p>Max: <span id="yMax">0</span>°/s</p>
+            <p>Avg: <span id="yAvg">0</span>°/s</p>
+        </div>
+        <div class="stat-card">
+            <h3>Z-Axis</h3>
+            <p>Min: <span id="zMin">0</span>°/s</p>
+            <p>Max: <span id="zMax">0</span>°/s</p>
+            <p>Avg: <span id="zAvg">0</span>°/s</p>
+        </div>
+    </div>
     <div id="chartContainer">
         <canvas id="gyroChart"></canvas>
     </div>
